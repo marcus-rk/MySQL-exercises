@@ -6,7 +6,7 @@ USE taxi;  -- use correct database
 /* When is the busiest time of the day (by the hour)? My Answer: hour 22 */
 SELECT
 	HOUR(tpep_pickup_datetime) AS `hour`,
-    COUNT(*) AS hour_total
+	COUNT(*) AS hour_total
 FROM trips
 GROUP BY `hour`
 ORDER BY hour_total DESC; 
@@ -14,7 +14,7 @@ ORDER BY hour_total DESC;
 /* What payment type has the highest fare amount on average? My Answer: payment_type 1 (Credit card) **/
 SELECT
 	payment_type,
-    AVG(fare_amount) AS average_fare_amount
+	AVG(fare_amount) AS average_fare_amount
 FROM trips
 GROUP BY payment_type
 ORDER BY average_fare_amount DESC;
@@ -22,7 +22,7 @@ ORDER BY average_fare_amount DESC;
 /* At what time of day (by the hour) are the longest trips on average? My Answer: hour 5 */
 SELECT
 	HOUR(tpep_pickup_datetime) AS `hour`,
-    AVG(trip_distance) AS average_trip_distance
+	AVG(trip_distance) AS average_trip_distance
 FROM trips
 GROUP BY `hour`
 ORDER BY average_trip_distance DESC;
@@ -30,7 +30,7 @@ ORDER BY average_trip_distance DESC;
 /* What are the average tip amount for each passenger count? */
 SELECT
 	passenger_count,
-    AVG(tip_amount) AS average_tip_amount
+	AVG(tip_amount) AS average_tip_amount
 FROM trips
 GROUP BY passenger_count
 ORDER BY average_tip_amount DESC;
@@ -44,9 +44,9 @@ My Answer: Yes, longer tours/trips mean more passengers
 */
 SELECT
     CASE
-        WHEN trip_distance < 10 THEN 'Short Distance'
-        WHEN trip_distance >= 10 AND trip_distance < 20 THEN 'Medium Distance'
-        WHEN trip_distance >= 20 THEN 'Long Distance'
+        WHEN trip_distance < 5 THEN 'Short Distance'
+        WHEN trip_distance >= 5 AND trip_distance < 10 THEN 'Medium Distance'
+        WHEN trip_distance >= 10 THEN 'Long Distance'
     END AS distance_range_enum,
     AVG(passenger_count) AS average_passenger_count
 FROM trips
