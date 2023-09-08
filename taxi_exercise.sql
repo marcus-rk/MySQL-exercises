@@ -39,14 +39,14 @@ No, a passenger count of 4 tends to result in the most generous tippers.
 (The max count of passengers in a taxi is 6 - which is actually the worst tippers)
 */
 
-/* Advanced - Do longer turns mean more passengers? (?I think they mean tours/trips?) 
-My Answer: Yes, longer tours/trips mean more passengers
+/* Advanced 1 - Do longer trip distance mean more passengers? 
+My Answer: Yes, longer trip distance mean more passengers
 */
 SELECT
     CASE
-        WHEN trip_distance < 5 THEN 'Short Distance'
-        WHEN trip_distance >= 5 AND trip_distance < 10 THEN 'Medium Distance'
-        WHEN trip_distance >= 10 THEN 'Long Distance'
+        WHEN trip_distance < 5 THEN "Short Distance"
+        WHEN trip_distance >= 5 AND trip_distance < 10 THEN "Medium Distance"
+        WHEN trip_distance >= 10 THEN "Long Distance"
     END AS distance_range_enum,
     AVG(passenger_count) AS average_passenger_count
 FROM trips
@@ -58,3 +58,21 @@ ORDER BY average_passenger_count DESC;
 be set to whatever, but I think this makes the must sense in terms of the data given. 
 */
 
+/* Advanced 2 - Do longer trip time mean more passengers? 
+My Answer: Yes, longer trip time means more passengers
+
+First I find the average time (in minutes for a all rides, 
+to determine a good interval for my time enums */
+SELECT AVG(TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime)) AS average_time_ride
+FROM trips;
+
+SELECT
+    CASE
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 10 THEN "Short ride"
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 10 AND TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 15 THEN "Medium ride"
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 15 THEN "Long ride"
+    END AS time_enum,
+    AVG(passenger_count) AS average_passenger_count
+FROM trips
+GROUP BY time_enum
+ORDER BY AVG(passenger_count) DESC;
