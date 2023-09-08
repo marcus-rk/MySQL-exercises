@@ -41,7 +41,24 @@ No, a passenger count of 4 tends to result in the most generous tippers.
 
 /* Advanced 1 - Do longer trip distance mean more passengers? 
 My Answer: Yes, longer trip distance mean more passengers
-*/
+
+First I find the average distance for all rides
+to determin a suitable distance enum interval*/
+SELECT AVG(trip_distance)
+FROM trips;
+
+-- Solution 1
+SELECT
+    CASE
+        WHEN trip_distance <= 3 THEN "Short Distance"
+        WHEN trip_distance > 3 THEN "Long Distance"
+    END AS distance_range_enum,
+    AVG(passenger_count) AS average_passenger_count
+FROM trips
+GROUP BY distance_range_enum
+ORDER BY average_passenger_count DESC;
+
+-- Solution 2
 SELECT
     CASE
         WHEN trip_distance < 5 THEN "Short Distance"
@@ -58,19 +75,32 @@ ORDER BY average_passenger_count DESC;
 be set to whatever, but I think this makes the must sense in terms of the data given. 
 */
 
+
 /* Advanced 2 - Do longer trip time mean more passengers? 
 My Answer: Yes, longer trip time means more passengers
 
 First I find the average time (in minutes for a all rides, 
-to determine a good interval for my time enums */
+to determine a suitable interval for my time enums */
 SELECT AVG(TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime)) AS average_time_ride
 FROM trips;
 
+-- Solution 1
 SELECT
     CASE
         WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 15 THEN "Short ride"
         WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 15 AND TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 20 THEN "Medium ride"
         WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 20 THEN "Long ride"
+    END AS time_enum,
+    AVG(passenger_count) AS average_passenger_count
+FROM trips
+GROUP BY time_enum
+ORDER BY AVG(passenger_count) DESC;
+
+-- Solution 2
+SELECT
+    CASE
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) <= 16 THEN "Short ride"
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) > 16 THEN "Long ride"
     END AS time_enum,
     AVG(passenger_count) AS average_passenger_count
 FROM trips
