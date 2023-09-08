@@ -68,9 +68,9 @@ FROM trips;
 
 SELECT
     CASE
-        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 10 THEN "Short ride"
-        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 10 AND TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 15 THEN "Medium ride"
-        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 15 THEN "Long ride"
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 15 THEN "Short ride"
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 15 AND TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) < 20 THEN "Medium ride"
+        WHEN TIMESTAMPDIFF(MINUTE, tpep_pickup_datetime, tpep_dropoff_datetime) >= 20 THEN "Long ride"
     END AS time_enum,
     AVG(passenger_count) AS average_passenger_count
 FROM trips
