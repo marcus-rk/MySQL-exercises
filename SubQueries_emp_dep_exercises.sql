@@ -49,7 +49,9 @@ WHERE DA.average_department_salary > OA.overall_average_salary;
 
 /* This is the first solution I tried using only sub-queries
 The problem with this code is it doesn't account for departments
-with 0 employees or salary at NULL */
+with 0 employees or salary at NULL
+
+
 SELECT department_name, 
 	-- Calculate the average salary for each department
 	(SELECT AVG(salary) 
@@ -67,3 +69,5 @@ HAVING average_department_salary >
                GROUP BY department_number
            ) AS department_averages
        );
+       
+*/
