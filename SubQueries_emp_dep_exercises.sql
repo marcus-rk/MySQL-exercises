@@ -21,7 +21,11 @@ SELECT
 FROM departments AS D;
 
 /* Retrieve the department name and average salary of all departments
- with an average higher than the average department salary 
+ with an average higher than the average department salary
+(Advanced 1 - Retrieve all departments and their average salary 
+if the department has an salary average higher than the total 
+average department salary excluding commission?)
+
       
 I found a solution which uses something called:CTEs (Common Table Expressions) 
 CTEs works kindda like variables or helping tables, making the code more readable and remove redundant calculations. */
