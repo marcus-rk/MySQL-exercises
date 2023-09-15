@@ -22,8 +22,34 @@ FROM departments AS D;
 
 /* Retrieve the department name and average salary of all departments
  with an average higher than the average department salary 
- 
- NOTE: This code doesn't calcualte avg probarly and ignores that Operation has no salary*/
+      
+I found a solution which uses something called:CTEs (Common Table Expressions) 
+CTEs works kindda like variables or helping tables, making the code more readable and remove redundant calculations. */
+WITH DepartmentAverages AS (
+    SELECT 
+		D.department_number,
+        IFNULL(AVG(E.salary), 0) AS average_department_salary -- Departments with NULL salary will be set to 0
+    FROM departments AS D
+    LEFT JOIN employees AS E -- Using LEFT JOIN to keep departments with 0 employeers or NULL
+		ON D.department_number = E.department_number
+    GROUP BY D.department_number
+),
+OverallAverage AS (
+    SELECT AVG(average_department_salary) AS overall_average_salary
+    FROM DepartmentAverages
+)
+
+SELECT D.department_name, DA.average_department_salary, OA.overall_average_salary
+FROM departments AS D
+INNER JOIN DepartmentAverages AS DA 
+	ON D.department_number = DA.department_number
+CROSS JOIN OverallAverage AS OA -- CROSS JOIN adds the overall average salary to every row
+WHERE DA.average_department_salary > OA.overall_average_salary;
+
+
+/* This is the first solution I tried using only sub-queries
+The problem with this code is it doesn't account for departments
+with 0 employees or salary at NULL */
 SELECT department_name, 
 	-- Calculate the average salary for each department
 	(SELECT AVG(salary) 
@@ -41,24 +67,3 @@ HAVING average_department_salary >
                GROUP BY department_number
            ) AS department_averages
        );
-       
-/* I found another (maybe better solution) which uses something called:CTEs (Common Table Expressions) 
-CTEs works kindda like variables or helping tables, making the code more readable and remove redundant calculations. 
-
-NOTE: This code doesn't calcualte avg probarly and ignores that Operation has no salary*/
-WITH DepartmentAverages AS (
-    SELECT department_number, AVG(salary) AS average_department_salary
-    FROM employees
-    GROUP BY department_number
-),
-OverallAverage AS (
-    SELECT AVG(average_department_salary) AS overall_average_salary
-    FROM DepartmentAverages
-)
-
-SELECT D.department_name, DA.average_department_salary, OA.overall_average_salary
-FROM departments AS D
-INNER JOIN DepartmentAverages AS DA 
-	ON D.department_number = DA.department_number
-CROSS JOIN OverallAverage AS OA -- CROSS JOIN adds the overall average salary to every row
-WHERE DA.average_department_salary > OA.overall_average_salary;
