@@ -75,3 +75,28 @@ HAVING average_department_salary >
        );
        
 */
+
+/* Advanced 2 - Retrieve all departments and their average salary 
+if the department has an salary average higher than the total 
+average department salary INCLUDING commission? */
+WITH DepartmentAverages AS (
+    SELECT 
+		D.department_number,
+        IFNULL(AVG(E.salary + E.commission), 0) AS average_department_salary -- Added commission to salary
+    FROM departments AS D
+    LEFT JOIN employees AS E
+		ON D.department_number = E.department_number
+    GROUP BY D.department_number
+),
+OverallAverage AS (
+    SELECT AVG(average_department_salary) AS overall_average_salary
+    FROM DepartmentAverages
+)
+
+SELECT D.department_name, DA.average_department_salary, OA.overall_average_salary
+FROM departments AS D
+INNER JOIN DepartmentAverages AS DA 
+	ON D.department_number = DA.department_number
+CROSS JOIN OverallAverage AS OA
+WHERE DA.average_department_salary > OA.overall_average_salary;
+
