@@ -15,10 +15,11 @@ WHERE salary > (SELECT AVG(salary) FROM employees);
 /* Retrieve the department name and average salary of all departments */
 SELECT
     D.department_name,
-    (SELECT AVG(salary) 
+    (SELECT IFNULL(AVG(salary), 0) -- NULL set to 0
     FROM employees AS E 
     WHERE E.department_number = D.department_number) AS average_department_salary
-FROM departments AS D;
+FROM departments AS D
+ORDER BY average_department_salary DESC;
 
 /* Retrieve the department name and average salary of all departments
  with an average higher than the average department salary
