@@ -10,8 +10,7 @@ FROM employees;
 /* Retrieve the names of employees with a salary above the average */
 SELECT employee_name, salary
 FROM employees
-WHERE 
-	salary > (SELECT AVG(salary) FROM employees);
+WHERE salary > (SELECT AVG(salary) FROM employees);
     
 /* Retrieve the department name and average salary of all departments */
 SELECT
