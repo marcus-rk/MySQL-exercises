@@ -8,10 +8,15 @@ SELECT COUNT(DISTINCT artist) AS total -- No duplicates
 FROM spotify
 WHERE artist REGEXP '\\d';
 
-/* How many distinct artists either start with a number ?OR? ends with a number? */
+/* How many distinct artists EITHER start with a number OR ends with a number? */
 SELECT COUNT(DISTINCT artist) AS total -- No duplicates
 FROM spotify
 WHERE artist REGEXP '^\\d|\\d$';
+
+/* How many distinct artists start with a number AND ends with a number? */
+SELECT COUNT(DISTINCT artist) AS total -- No duplicates
+FROM spotify
+WHERE artist REGEXP '^\\d.*\\d$';
 
 /* How many songs have features? (feat.) OR (with) OR (Featuring) */
 SELECT COUNT(*) AS total_features
