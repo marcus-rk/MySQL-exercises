@@ -27,7 +27,7 @@ I found a solution which uses something called:CTEs (Common Table Expressions)
 CTEs works kindda like variables or helping tables, making the code more readable and remove redundant calculations. */
 WITH DepartmentAverages AS (
     SELECT 
-		D.department_number,
+	D.department_number,
         IFNULL(AVG(E.salary), 0) AS average_department_salary -- Departments with NULL salary will be set to 0
     FROM departments AS D
     LEFT JOIN employees AS E -- Using LEFT JOIN to keep departments with 0 employeers or NULL
@@ -53,8 +53,8 @@ with 0 employees or salary at NULL */
 SELECT department_name, 
 	-- Calculate the average salary for each department
 	(SELECT AVG(salary) 
-    FROM employees AS E 
-    WHERE E.department_number = D.department_number) AS average_department_salary
+	FROM employees AS E 
+	WHERE E.department_number = D.department_number) AS average_department_salary
 FROM departments AS D
     -- Check if the department's average salary is higher than the overall average department salary
     -- (There might be a better solution, that do not calculate the average_department_salary two times)
