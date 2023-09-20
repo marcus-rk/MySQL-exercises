@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS students (
 	student_id INT AUTO_INCREMENT, -- Added auto_increment
 	first_name VARCHAR(50), 
 	last_name VARCHAR(50),
-    birthdate VARCHAR(50), -- Ændret til varchar(50) da Nicklas sagde det ift. senere opgave.
-    enrollment_date DATETIME, -- 'YYYY-MM-DD hh:mm:ss'
-    `status` VARCHAR(15),
+    	birthdate VARCHAR(50), -- Ændret til varchar(50) da Nicklas sagde det ift. senere opgave.
+    	enrollment_date DATETIME, -- 'YYYY-MM-DD hh:mm:ss'
+    	`status` VARCHAR(15),
 	PRIMARY KEY (student_id)
 );
 
@@ -55,18 +55,18 @@ MODIFY birthdate DATE;
 	-- First we make an instructors table
 CREATE TABLE IF NOT EXISTS instructors (
 	instructor_id INT AUTO_INCREMENT,
-    instructor_name VARCHAR(100) NOT NULL,
-    instructor_email VARCHAR(100) NOT NULL,
-    PRIMARY KEY(instructor_id)
+	instructor_name VARCHAR(100) NOT NULL,
+	instructor_email VARCHAR(100) NOT NULL,
+	PRIMARY KEY(instructor_id)
 );
 
 	-- Now we make a courses table with foreign key instructor_id
 CREATE TABLE IF NOT EXISTS courses (
 	course_id INT AUTO_INCREMENT, -- Added auto_increment
-    course_name VARCHAR(100),
-    instructor_id INT,
-    PRIMARY KEY(course_id),
-    FOREIGN KEY(instructor_id) REFERENCES instructors(instructor_id)
+	course_name VARCHAR(100),
+	instructor_id INT,
+	PRIMARY KEY(course_id),
+	FOREIGN KEY(instructor_id) REFERENCES instructors(instructor_id)
 );
 
 /* Add a default value of 'Active' for the status column in the "students" table. */
@@ -81,23 +81,23 @@ ALTER COLUMN `status` SET DEFAULT 'Active';
 */ 
 CREATE TABLE IF NOT EXISTS books (
 	book_id INT AUTO_INCREMENT,
-    title VARCHAR(100),
-    author VARCHAR(100),
-    isbn VARCHAR(13) UNIQUE,
-    PRIMARY KEY (book_id)
+	title VARCHAR(100),
+	author VARCHAR(100),
+	isbn VARCHAR(13) UNIQUE,
+	PRIMARY KEY (book_id)
 );
 
 /* Populate the tables with at least 1 entity for each table */
 	-- insert 1 entity into books
-INSERT INTO books(book_id, title, author,isbn)
-	VALUES (NULL,'Best Title','Best Author','1234567891011'); -- NULL to enable auto_increment
+INSERT INTO books(title, author,isbn)
+	VALUES ('Best Title','Best Author','1234567891011');
     
-    -- insert 1 entity into instructors
+    	-- insert 1 entity into instructors
 INSERT INTO instructors(instructor_name, instructor_email)
-	VALUES ('Best Instructor','best@instructor.com'); -- NULL to enable auto_increment
+	VALUES ('Best Instructor','best@instructor.com');
     
 	-- insert 1 entity into courses
-INSERT INTO courses(course_id, course_name, instructor_id)
+INSERT INTO courses(course_name, instructor_id)
 	VALUES ('Best Course Name',1);
     
 	-- insert 1 entity into students
@@ -107,9 +107,9 @@ INSERT INTO students(first_name,last_name,birthdate,enrollment_date,email)
 /* Modify the database such that 1 book is used on each course */
 
 	-- My idea: you can add book_id as foreign key in course
-    -- adding column for book_id
+    	-- adding column for book_id
 ALTER TABLE courses 
-ADD COLUMN book_id INT NOT NULL;
+ADD COLUMN book_id INT;
 
 	-- Assign FOREIGN KEY to column
 ALTER TABLE courses 
