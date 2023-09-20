@@ -56,7 +56,7 @@ MODIFY birthdate DATE;
 CREATE TABLE IF NOT EXISTS instructors (
 	instructor_id INT AUTO_INCREMENT,
 	instructor_name VARCHAR(100) NOT NULL,
-	instructor_email VARCHAR(100) NOT NULL,
+	instructor_email VARCHAR(100) NOT NULL UNIQUE, -- Made sure that instructors has an unique email
 	PRIMARY KEY(instructor_id)
 );
 
