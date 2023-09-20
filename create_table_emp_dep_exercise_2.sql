@@ -1,8 +1,8 @@
 -- Makj0005
 -- link til opgaver: https://nicklasdean.gitbook.io/ita2023-1.-semester/database-design/01-ddl-constraints
-CREATE DATABASE IF NOT EXISTS emp_dep_2;
+CREATE DATABASE IF NOT EXISTS school;
 
-USE emp_dep_2;
+USE school; -- Use correct database
 
 /*
 DROP TABLE IF EXISTS employees;
