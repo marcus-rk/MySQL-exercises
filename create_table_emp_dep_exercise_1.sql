@@ -31,10 +31,10 @@ Verify that your constraints work as intended.*/
 INSERT INTO departments(department_number, department_name, location)
 	VALUES (10,'SALES','NEW YORK'); -- Valid
 INSERT INTO departments(department_number, department_name, location)
-	VALUES (1001,NULL,NULL); -- Not valid
+	VALUES (1001,'SALES','NEW YORK'); -- Not valid (department_number cannot be higher than 1000)
 
 -- employees correct and not correct
 INSERT INTO employees(id, employee_name, job,manager,hiredate,salary,commission,department_number)
-	VALUES (1,'BOB','MANAGER',7839,'2023-10-20',0,0,10);
+	VALUES (1,'BOB','MANAGER',7839,'2023-10-20',0,0,10); -- Valid
 INSERT INTO employees(id, employee_name, job,manager,hiredate,salary,commission,department_number)
-	VALUES (1,'BOB','MANAGER',7839,'2023-10-20',0,0,10);
+	VALUES (1,'BOB','MANAGER',7839,'2023-10-20',0,0,10); -- Not valid (there can only be one id=1 unique)
