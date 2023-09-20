@@ -105,12 +105,18 @@ INSERT INTO students(first_name,last_name,birthdate,enrollment_date,email)
 	VALUES ("Bob","Hansen",'1999-10-20','2023-10-20 11:20:35','bob@Hansen.com');
    
 /* Modify the database such that 1 book is used on each course */
-
-	-- My idea: you can add book_id as foreign key in course
-    	-- adding column for book_id
+	-- My idea: You could add book_id as foreign key in course
+    
+	-- adding column for book_id in courses table
 ALTER TABLE courses 
-ADD COLUMN book_id INT;
+ADD COLUMN book_id INT; -- NOT NULL is optional
 
-	-- Assign FOREIGN KEY to column
+	-- Assign FOREIGN KEY to book_id column in courses table
 ALTER TABLE courses 
 ADD FOREIGN KEY (book_id) REFERENCES books(book_id);
+
+	-- Test book_id foreign key in courses
+INSERT INTO courses(course_name, instructor_id, book_id)
+	VALUES ('Worst Course Name',1,1);
+
+SELECT * FROM courses;
