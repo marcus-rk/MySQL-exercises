@@ -92,18 +92,27 @@ CREATE TABLE IF NOT EXISTS books (
 INSERT INTO books(title, author,isbn)
 	VALUES ('Best Title','Best Author','1234567891011');
     
-    	-- insert 1 entity into instructors
+SELECT * FROM books;
+
+	-- insert 1 entity into instructors
 INSERT INTO instructors(instructor_name, instructor_email)
 	VALUES ('Best Instructor','best@instructor.com');
     
+SELECT * FROM instructors;
+
 	-- insert 1 entity into courses
 INSERT INTO courses(course_name, instructor_id)
 	VALUES ('Best Course Name',1);
     
+SELECT * FROM courses;
+
 	-- insert 1 entity into students
 INSERT INTO students(first_name,last_name,birthdate,enrollment_date,email)
 	VALUES ("Bob","Hansen",'1999-10-20','2023-10-20 11:20:35','bob@Hansen.com');
-   
+    
+SELECT * FROM students;
+
+
 /* Modify the database such that 1 book is used on each course */
 	-- My idea: You could add book_id as foreign key in course
     
